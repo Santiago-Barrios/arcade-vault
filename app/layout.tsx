@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Press_Start_2P, JetBrains_Mono } from "next/font/google";
+import { Nav } from "@/components/nav";
 import "./globals.css";
 
 const pixelFont = Press_Start_2P({
@@ -24,7 +25,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${pixelFont.variable} ${monoFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Nav />
+        <main className="av-main">{children}</main>
+      </body>
     </html>
   );
 }
