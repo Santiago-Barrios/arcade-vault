@@ -8,12 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Arcade Vault — an online arcade platform where users play games and compete on points. Currently a fresh, unmodified `create-next-app` scaffold (App Router, `app/page.tsx`, `app/layout.tsx`); no custom features implemented yet.
 
-## Commands
-
-- `npm run dev` — start dev server (also regenerates `AGENTS.md`, see below)
-- `npm run build` — production build
-- `npm run start` — run production build
-- `npm run lint` — ESLint (flat config in `eslint.config.mjs`, extends `eslint-config-next`)
 
 No test runner is configured yet.
 
@@ -30,3 +24,7 @@ npx skills@latest add Klerith/fernando-skills
 ```
 
 Expect features to be defined as specs before implementation.
+
+## Skills
+
+usa siempre /frontend-design para siseñar la  interfaz de usuario.
