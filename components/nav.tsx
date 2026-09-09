@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { getUser, setUser as persistUser, type User } from "@/lib/storage";
+import { getUser, setUser as persistUser, subscribeUser } from "@/lib/storage";
+
+function getServerUserSnapshot() {
+  return null;
+}
 
 export function Nav() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [user, setUserState] = useState<User | null>(null);
-
-  useEffect(() => {
-    setUserState(getUser());
-  }, [pathname]);
+  const user = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot);
 
   const isBiblioteca = pathname === "/" || pathname.startsWith("/juego");
   const isSalon = pathname === "/salon";
@@ -23,7 +23,6 @@ export function Nav() {
 
   const handleSignOut = () => {
     persistUser(null);
-    setUserState(null);
     router.push("/");
   };
 

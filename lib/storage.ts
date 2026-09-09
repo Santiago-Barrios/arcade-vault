@@ -13,13 +13,23 @@ export interface ScoreEntry {
 
 const USER_KEY = "av_user";
 const SCORES_KEY = "av_scores";
+const USER_EVENT = "av:user-changed";
+
+let cachedRaw: string | null = null;
+let cachedUser: User | null = null;
 
 export function getUser(): User | null {
-  try {
-    return JSON.parse(localStorage.getItem(USER_KEY) || "null");
-  } catch {
-    return null;
+  if (typeof window === "undefined") return null;
+  const raw = localStorage.getItem(USER_KEY);
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    try {
+      cachedUser = raw ? JSON.parse(raw) : null;
+    } catch {
+      cachedUser = null;
+    }
   }
+  return cachedUser;
 }
 
 export function setUser(user: User | null): void {
@@ -28,6 +38,17 @@ export function setUser(user: User | null): void {
   } else {
     localStorage.removeItem(USER_KEY);
   }
+  window.dispatchEvent(new Event(USER_EVENT));
+}
+
+// Permite a componentes (p. ej. Nav) suscribirse a cambios de sesión vía useSyncExternalStore.
+export function subscribeUser(callback: () => void): () => void {
+  window.addEventListener(USER_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(USER_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
 }
 
 export function saveScore(entry: Omit<ScoreEntry, "at">): void {

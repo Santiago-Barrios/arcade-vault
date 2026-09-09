@@ -26,6 +26,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${pixelFont.variable} ${monoFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <div className="av-bg" />
+        <div className="av-noise" />
         <Nav />
         <main className="av-main">{children}</main>
       </body>
