@@ -15,6 +15,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const user = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot);
 
+  const isHome = pathname === "/";
   const isBiblioteca = pathname === "/games" || pathname.startsWith("/juego");
   const isSalon = pathname === "/salon";
   const isAuth = pathname === "/login";
@@ -34,6 +35,7 @@ export function Nav() {
           <div className="logo-text neon-cyan">ARCADE <span className="neon-magenta">VAULT</span></div>
         </Link>
         <div className="links">
+          <Link href="/" className={isHome ? "active" : ""}>Inicio</Link>
           <Link href="/games" className={isBiblioteca ? "active" : ""}>Biblioteca</Link>
           <Link href="/salon" className={isSalon ? "active" : ""}>Salón de la Fama</Link>
         </div>
@@ -53,6 +55,7 @@ export function Nav() {
       <div className={"av-mobile-backdrop" + (open ? " open" : "")} onClick={close}></div>
       <aside className={"av-mobile-panel" + (open ? " open" : "")}>
         <div className="pixel neon-cyan" style={{ fontSize: 11, marginBottom: 16 }}>MENÚ</div>
+        <Link href="/" className={isHome ? "active" : ""} onClick={close}>Inicio</Link>
         <Link href="/games" className={isBiblioteca ? "active" : ""} onClick={close}>Biblioteca</Link>
         <Link href="/salon" className={isSalon ? "active" : ""} onClick={close}>Salón de la Fama</Link>
         <Link href="/login" className={isAuth ? "active" : ""} onClick={close}>{user ? "Cuenta" : "Iniciar Sesión"}</Link>
