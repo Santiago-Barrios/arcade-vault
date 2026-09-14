@@ -1,6 +1,6 @@
 # 03 · Página About y envío de contacto (Resend)
 
-**Estado:** Aprobado  
+**Estado:** Implementado  
 **Depende de:** SPEC 02
 **Fecha:** 2026-09-13
 
