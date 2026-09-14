@@ -4,6 +4,9 @@
 .playwright-mcp/*
 !.playwright-mcp/.gitkeep
 
+.env*
+!.env.template
+
 # dependencies
 /node_modules
 /.pnp
@@ -33,9 +36,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
 
 # vercel
 .vercel
