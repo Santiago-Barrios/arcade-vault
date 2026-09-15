@@ -1,60 +1,60 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 function useReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll(".reveal");
+    const els = document.querySelectorAll(".reveal")
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add("in");
-            io.unobserve(e.target);
+            e.target.classList.add("in")
+            io.unobserve(e.target)
           }
-        });
+        })
       },
-      { threshold: 0.12 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+      { threshold: 0.12 },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
 }
 
 const HIGHLIGHTS = [
   { i: "HEART", t: "HECHO CON ❤️ PARA JUGADORES", c: "magenta" },
   { i: "BROWSER", t: "JUEGOS EN HTML — CORREN EN CUALQUIER NAVEGADOR", c: "cyan" },
   { i: "PLANT", t: "PROYECTO EN CONSTANTE CRECIMIENTO", c: "green" },
-] as const;
+] as const
 
 interface ContactForm {
-  name: string;
-  email: string;
-  msg: string;
+  name: string
+  email: string
+  msg: string
 }
 
-const EMPTY_FORM: ContactForm = { name: "", email: "", msg: "" };
+const EMPTY_FORM: ContactForm = { name: "", email: "", msg: "" }
 
 export function About() {
-  useReveal();
+  useReveal()
 
-  const [form, setForm] = useState<ContactForm>(EMPTY_FORM);
-  const [sent, setSent] = useState<string | null>(null);
-  const [shake, setShake] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState<ContactForm>(EMPTY_FORM)
+  const [sent, setSent] = useState<string | null>(null)
+  const [shake, setShake] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!form.name.trim() || !form.email.trim() || !form.msg.trim()) {
-      setShake(true);
-      setTimeout(() => setShake(false), 400);
-      return;
+      setShake(true)
+      setTimeout(() => setShake(false), 400)
+      return
     }
 
-    setSending(true);
-    setError(null);
+    setSending(true)
+    setError(null)
 
     try {
       const res = await fetch("/api/contact", {
@@ -65,19 +65,19 @@ export function About() {
           email: form.email.trim(),
           message: form.msg.trim(),
         }),
-      });
+      })
 
       if (!res.ok) {
-        throw new Error("request-failed");
+        throw new Error("request-failed")
       }
 
-      setSent(form.name.trim());
+      setSent(form.name.trim())
     } catch {
-      setError("No se pudo enviar el mensaje. Inténtalo de nuevo.");
+      setError("No se pudo enviar el mensaje. Inténtalo de nuevo.")
     } finally {
-      setSending(false);
+      setSending(false)
     }
-  };
+  }
 
   return (
     <div className="about fade-in">
@@ -93,11 +93,7 @@ export function About() {
 
         <div className="highlight-row">
           {HIGHLIGHTS.map((h, i) => (
-            <div
-              key={i}
-              className={"highlight " + h.c}
-              style={{ transitionDelay: i * 80 + "ms" }}
-            >
+            <div key={i} className={"highlight " + h.c} style={{ transitionDelay: i * 80 + "ms" }}>
               <HighlightIcon kind={h.i} />
               <div className="hl-text pixel">{h.t}</div>
             </div>
@@ -169,7 +165,12 @@ export function About() {
                   ></textarea>
                 </div>
                 {error && <p className="contact-error">{error}</p>}
-                <button className="btn xl press" type="submit" style={{ width: "100%" }} disabled={sending}>
+                <button
+                  className="btn xl press"
+                  type="submit"
+                  style={{ width: "100%" }}
+                  disabled={sending}
+                >
                   {sending ? "▶  ENVIANDO…" : "▶  ENVIAR MENSAJE"}
                 </button>
               </>
@@ -197,8 +198,8 @@ export function About() {
                       className="btn ghost"
                       type="button"
                       onClick={() => {
-                        setSent(null);
-                        setForm(EMPTY_FORM);
+                        setSent(null)
+                        setForm(EMPTY_FORM)
                       }}
                     >
                       ENVIAR OTRO MENSAJE
@@ -211,11 +212,11 @@ export function About() {
         </div>
       </section>
     </div>
-  );
+  )
 }
 
 function HighlightIcon({ kind }: { kind: string }) {
-  const C = "currentColor";
+  const C = "currentColor"
   if (kind === "HEART")
     return (
       <svg className="hl-icon" viewBox="0 0 16 16">
@@ -233,7 +234,7 @@ function HighlightIcon({ kind }: { kind: string }) {
           <rect x="7" y="14" width="2" height="1" />
         </g>
       </svg>
-    );
+    )
   if (kind === "BROWSER")
     return (
       <svg className="hl-icon" viewBox="0 0 16 16">
@@ -248,7 +249,7 @@ function HighlightIcon({ kind }: { kind: string }) {
           <rect x="3" y="11" width="3" height="1" />
         </g>
       </svg>
-    );
+    )
   if (kind === "PLANT")
     return (
       <svg className="hl-icon" viewBox="0 0 16 16">
@@ -262,6 +263,6 @@ function HighlightIcon({ kind }: { kind: string }) {
           <rect x="4" y="14" width="8" height="1" />
         </g>
       </svg>
-    );
-  return null;
+    )
+  return null
 }

@@ -31,8 +31,6 @@
 - Cambios a `home.tsx`, `library.tsx` u otras rutas más allá de agregar el link "Acerca de" al `Nav`.
 - Bloque `GAMEPAD` del CSS del template — no usado por `about.jsx`.
 
-
-
 ## Modelo de datos
 
 No se introduce persistencia. El único contrato nuevo es el payload que viaja del formulario al endpoint:
@@ -40,9 +38,9 @@ No se introduce persistencia. El único contrato nuevo es el payload que viaja d
 ```ts
 // ContactPayload — cuerpo del POST a /api/contact
 interface ContactPayload {
-  name: string;
-  email: string;
-  message: string;
+  name: string
+  email: string
+  message: string
 }
 ```
 
@@ -79,8 +77,6 @@ Cada paso deja la app funcional y navegable con `npm run dev`.
 - [ ] `app/globals.css` incluye las clases `.about-*`, `.highlight-*`, `.contact-*`, `.terminal-success`, `.term-*` — sin clases `.gp-*` (gamepad).
 - [ ] `npm run lint` pasa sin errores nuevos introducidos por este trabajo.
 
-
-
 ## Decisiones tomadas y descartadas
 
 - **Sí:** `onboarding@resend.dev` como remitente — decisión explícita del usuario; no hay dominio propio verificado en Resend todavía.
@@ -90,18 +86,12 @@ Cada paso deja la app funcional y navegable con `npm run dev`.
 - **No:** extraer `useReveal` a un hook compartido — se duplica igual que en `components/home.tsx`; evita introducir una carpeta `hooks/` no pedida por una sola línea de reuso.
 - **No:** rate limiting o captcha anti-spam — no discutido con el usuario; se deja para una spec futura si el formulario recibe abuso real.
 
-
-
 ## Riesgos identificados
-
 
 | Riesgo                                                                                                                                                                       | Mitigación                                                                                                                                       |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `onboarding@resend.dev` solo permite enviar al email verificado de la cuenta Resend; si `santiago.developer.lab@gmail.com` no es esa cuenta, el envío fallará en producción. | El estado de error del paso 4 hace visible el fallo en vez de fallar en silencio; verificar la cuenta Resend antes de dar por cerrado el paso 7. |
 | `RESEND_API_KEY`, `CONTACT_EMAIL_TO` y `CONTACT_EMAIL_FROM` viven solo en `.env.local` (no versionado).                                                                      | Al desplegar (Vercel u otro) hay que configurar las 3 variables manualmente en el proveedor, o el envío fallará ahí aunque funcione en local.    |
-
-
-
 
 ## Qué **no** está en este spec
 

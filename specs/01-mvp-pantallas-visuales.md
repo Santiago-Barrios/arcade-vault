@@ -9,6 +9,7 @@
 ## Alcance
 
 **Dentro:**
+
 - Rutas reales de App Router:
   - `/` — Biblioteca (grid de juegos, búsqueda, filtro por categoría).
   - `/juego/[id]` — Detalle del juego (info, tabla de mejores puntuaciones, botón jugar).
@@ -25,6 +26,7 @@
 - Responsive: mantener los breakpoints y comportamiento móvil (menú hamburguesa) del template.
 
 **Fuera de alcance:**
+
 - Cualquier juego real jugable (Bloque Buster, Caída, Serpentina, etc.). El "reproductor" sigue siendo una simulación visual, igual que en el template.
 - Backend, API routes, base de datos o autenticación real (OAuth de Google/GitHub son botones decorativos sin funcionalidad).
 - Persistencia server-side o multi-dispositivo de sesión/puntuaciones.
@@ -36,43 +38,50 @@
 Módulo `lib/data.ts` (o similar), tipado en TypeScript, portado desde `references/templates/data.jsx`:
 
 ```ts
-export type GameCategory = "ARCADE" | "PUZZLE" | "SHOOTER" | "VERSUS";
-export type GameColor = "cyan" | "magenta" | "yellow" | "green";
+export type GameCategory = "ARCADE" | "PUZZLE" | "SHOOTER" | "VERSUS"
+export type GameColor = "cyan" | "magenta" | "yellow" | "green"
 
 export interface Game {
-  id: string;
-  title: string;
-  short: string;
-  long: string;
-  cat: GameCategory;
-  cover: string; // clase CSS cover-*
-  color: GameColor;
-  best: number;
-  plays: string;
+  id: string
+  title: string
+  short: string
+  long: string
+  cat: GameCategory
+  cover: string // clase CSS cover-*
+  color: GameColor
+  best: number
+  plays: string
 }
 
-export const GAMES: Game[];
-export const CATS: ("TODOS" | GameCategory)[];
-export const PLAYERS: string[];
+export const GAMES: Game[]
+export const CATS: ("TODOS" | GameCategory)[]
+export const PLAYERS: string[]
 
 export interface ScoreRow {
-  rank: number;
-  name: string;
-  score: number;
-  date: string;
+  rank: number
+  name: string
+  score: number
+  date: string
 }
-export function seededScores(seed: number, count?: number): ScoreRow[];
+export function seededScores(seed: number, count?: number): ScoreRow[]
 ```
 
 Módulo `lib/storage.ts` (client-only helpers sobre `localStorage`, mismas claves que el template):
 
 ```ts
-export interface User { name: string }
-export interface ScoreEntry { game: string; score: number; name: string; at: number }
+export interface User {
+  name: string
+}
+export interface ScoreEntry {
+  game: string
+  score: number
+  name: string
+  at: number
+}
 
-export function getUser(): User | null;
-export function setUser(user: User | null): void; // av_user
-export function saveScore(entry: Omit<ScoreEntry, "at">): void; // av_scores
+export function getUser(): User | null
+export function setUser(user: User | null): void // av_user
+export function saveScore(entry: Omit<ScoreEntry, "at">): void // av_scores
 ```
 
 No se introduce ninguna otra estructura de datos nueva.

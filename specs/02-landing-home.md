@@ -9,6 +9,7 @@
 ## Alcance
 
 **Dentro:**
+
 - Nueva pantalla `/` (Home/landing), portada desde `references/templates/home-about/home.jsx`, con sus 6 secciones:
   - Hero con siluetas flotantes (`FloatingSilhouettes`) y CTAs (`EXPLORAR JUEGOS`, `CREAR CUENTA`).
   - «¿Por qué Arcade Vault?» — 4 feature cards con iconos pixel (`FeatureIcon`).
@@ -25,6 +26,7 @@
 - Textos en español y comportamiento responsive, igual que el template.
 
 **Fuera de alcance:**
+
 - La pantalla "Acerca de" / Contacto (`about.jsx`) y su CSS asociado. Se define en una spec posterior.
 - La sección "GAMEPAD" del CSS del template (`home-about/styles.css` líneas 1151–1620) — `home.jsx` no la usa.
 - Cualquier juego real jugable, backend, o persistencia server-side (sigue vigente lo definido en SPEC 01).
@@ -44,7 +46,7 @@ No se introduce ninguna estructura de datos nueva en `lib/`. Los datos mock que 
    - `/* ===== ACTIVITY ===== */` (líneas 1621–1671): `.activity-grid`, `.ticker`, `.top-row`, `.lb-link`.
    - `/* ===== PRICING ===== */` (líneas 1672–1725): `.price-card`, `.pc-*`, `.pricing-faq`, `.faq-*`.
    - Los `@keyframes` nuevos que estos bloques requieren: `bounce`, `float`, `pulse-led`, `tickin`.
-   No se copian los bloques `GAMEPAD` ni `ABOUT` del mismo archivo.
+     No se copian los bloques `GAMEPAD` ni `ABOUT` del mismo archivo.
 4. **Componente Home.** Crear `components/home.tsx` (`"use client"`) portando `home.jsx`: hook `useReveal` (IntersectionObserver sobre `.reveal`), `FloatingSilhouettes`, `FeatureIcon`, `MiniCard`, y las 6 secciones descritas en el Alcance. El `navigate(...)` del template se traduce a `next/link` (`<Link href="...">`) o `useRouter().push(...)` según corresponda a cada CTA.
 5. **Montar la landing.** Reescribir `app/page.tsx` para renderizar `<Home />` en vez de `<Library />`.
 6. **Link "Inicio" en el Nav.** Añadirlo como primer link en la lista de desktop y en el panel móvil de `components/nav.tsx`, activo cuando `pathname === "/"`. No se añade "Acerca de".

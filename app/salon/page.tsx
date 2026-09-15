@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { useMemo, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
-import { GAMES, seededScores } from "@/lib/data";
-import { getUser, subscribeUser } from "@/lib/storage";
+import { useMemo, useState, useSyncExternalStore } from "react"
+import Link from "next/link"
+import { GAMES, seededScores } from "@/lib/data"
+import { getUser, subscribeUser } from "@/lib/storage"
 
 function getServerUserSnapshot() {
-  return null;
+  return null
 }
 
 export default function SalonPage() {
-  const [tab, setTab] = useState(GAMES[0].id);
-  const rows = useMemo(() => seededScores(tab.length * 23 + 7, 12), [tab]);
-  const game = GAMES.find((g) => g.id === tab)!;
-  const user = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot);
-  const youRank = user ? Math.floor(8 + (tab.length % 4)) : null;
-  const youScore = user ? rows[5]?.score - 2400 : null;
+  const [tab, setTab] = useState(GAMES[0].id)
+  const rows = useMemo(() => seededScores(tab.length * 23 + 7, 12), [tab])
+  const game = GAMES.find((g) => g.id === tab)!
+  const user = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot)
+  const youRank = user ? Math.floor(8 + (tab.length % 4)) : null
+  const youScore = user ? rows[5]?.score - 2400 : null
 
   return (
     <div className="av-hall fade-in">
@@ -28,7 +28,11 @@ export default function SalonPage() {
 
       <div className="hall-tabs">
         {GAMES.map((g) => (
-          <button key={g.id} className={"chip" + (tab === g.id ? " active" : "")} onClick={() => setTab(g.id)}>
+          <button
+            key={g.id}
+            className={"chip" + (tab === g.id ? " active" : "")}
+            onClick={() => setTab(g.id)}
+          >
             {g.title}
           </button>
         ))}
@@ -42,7 +46,10 @@ export default function SalonPage() {
           <div className="date">{rows[1].date}</div>
         </div>
         <div className="podium-slot gold">
-          <div className="pixel" style={{ fontSize: 9, color: "var(--gold)", letterSpacing: "0.18em" }}>
+          <div
+            className="pixel"
+            style={{ fontSize: 9, color: "var(--gold)", letterSpacing: "0.18em" }}
+          >
             CAMPEÓN
           </div>
           <div className="rank-num" style={{ fontSize: 36, marginTop: 4 }}>
@@ -91,7 +98,10 @@ export default function SalonPage() {
               <div className="pl" style={{ color: "var(--yellow)" }}>
                 {user.name}
               </div>
-              <div className="sc" style={{ color: "var(--yellow)", textShadow: "0 0 6px rgba(245,255,0,0.5)" }}>
+              <div
+                className="sc"
+                style={{ color: "var(--yellow)", textShadow: "0 0 6px rgba(245,255,0,0.5)" }}
+              >
                 {(youScore || 9999).toLocaleString("es-ES")}
               </div>
               <div className="dt">11/05/2026</div>
@@ -106,5 +116,5 @@ export default function SalonPage() {
         </Link>
       </div>
     </div>
-  );
+  )
 }

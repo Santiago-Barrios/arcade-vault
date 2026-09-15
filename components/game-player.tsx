@@ -1,39 +1,39 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
-import type { Game } from "@/lib/data";
-import { getUser, saveScore, subscribeUser } from "@/lib/storage";
+import { useEffect, useState, useSyncExternalStore } from "react"
+import Link from "next/link"
+import type { Game } from "@/lib/data"
+import { getUser, saveScore, subscribeUser } from "@/lib/storage"
 
 function getServerUserSnapshot() {
-  return null;
+  return null
 }
 
 export function GamePlayer({ game }: { game: Game }) {
-  const [score, setScore] = useState(0);
-  const [lives] = useState(3);
-  const [paused, setPaused] = useState(false);
-  const [over, setOver] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [score, setScore] = useState(0)
+  const [lives] = useState(3)
+  const [paused, setPaused] = useState(false)
+  const [over, setOver] = useState(false)
+  const [saved, setSaved] = useState(false)
 
-  const sessionUser = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot);
-  const [nameOverride, setNameOverride] = useState<string | null>(null);
-  const name = nameOverride ?? sessionUser?.name ?? "INVITADO";
-  const level = Math.floor(score / 2500) + 1;
+  const sessionUser = useSyncExternalStore(subscribeUser, getUser, getServerUserSnapshot)
+  const [nameOverride, setNameOverride] = useState<string | null>(null)
+  const name = nameOverride ?? sessionUser?.name ?? "INVITADO"
+  const level = Math.floor(score / 2500) + 1
 
   useEffect(() => {
-    if (over || paused) return;
-    const t = setInterval(() => setScore((s) => s + Math.floor(10 + Math.random() * 90)), 220);
-    return () => clearInterval(t);
-  }, [over, paused]);
+    if (over || paused) return
+    const t = setInterval(() => setScore((s) => s + Math.floor(10 + Math.random() * 90)), 220)
+    return () => clearInterval(t)
+  }, [over, paused])
 
-  const endGame = () => setOver(true);
+  const endGame = () => setOver(true)
   const restart = () => {
-    setScore(0);
-    setPaused(false);
-    setOver(false);
-    setSaved(false);
-  };
+    setScore(0)
+    setPaused(false)
+    setOver(false)
+    setSaved(false)
+  }
 
   return (
     <div className="av-player fade-in">
@@ -86,7 +86,15 @@ export function GamePlayer({ game }: { game: Game }) {
                 <div className="pixel neon-yellow" style={{ fontSize: 22 }}>
                   EN PAUSA
                 </div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", marginTop: 10, letterSpacing: "0.16em" }}>
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 11,
+                    color: "var(--ink-dim)",
+                    marginTop: 10,
+                    letterSpacing: "0.16em",
+                  }}
+                >
                   PULSA REANUDAR PARA CONTINUAR
                 </div>
               </div>
@@ -95,9 +103,7 @@ export function GamePlayer({ game }: { game: Game }) {
         </div>
         <div className="crt-bottom">
           <span className="led">SEÑAL OK</span>
-          <span>
-            {game.title} · CRT-83 · 60 HZ
-          </span>
+          <span>{game.title} · CRT-83 · 60 HZ</span>
           <span>CARGA · 1MB</span>
         </div>
       </div>
@@ -118,8 +124,8 @@ export function GamePlayer({ game }: { game: Game }) {
                 <button
                   className="btn yellow"
                   onClick={() => {
-                    saveScore({ game: game.id, score, name });
-                    setSaved(true);
+                    saveScore({ game: game.id, score, name })
+                    setSaved(true)
                   }}
                 >
                   GUARDAR PUNTUACIÓN
@@ -140,5 +146,5 @@ export function GamePlayer({ game }: { game: Game }) {
         </div>
       )}
     </div>
-  );
+  )
 }
