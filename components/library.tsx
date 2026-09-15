@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import { useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import { CATS, GAMES, type Game } from "@/lib/data";
+import { useMemo, useRef, useState } from "react"
+import Link from "next/link"
+import { CATS, GAMES, type Game } from "@/lib/data"
 
 function GameCard({ game }: { game: Game }) {
-  const tiltRef = useRef<HTMLAnchorElement>(null);
+  const tiltRef = useRef<HTMLAnchorElement>(null)
 
   const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = tiltRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `translateY(-6px) rotateX(${-py * 6}deg) rotateY(${px * 8}deg)`;
-  };
+    const el = tiltRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    el.style.transform = `translateY(-6px) rotateX(${-py * 6}deg) rotateY(${px * 8}deg)`
+  }
 
   const onLeave = () => {
-    const el = tiltRef.current;
-    if (!el) return;
-    el.style.transform = "";
-  };
+    const el = tiltRef.current
+    if (!el) return
+    el.style.transform = ""
+  }
 
   return (
     <Link
@@ -44,7 +44,8 @@ function GameCard({ game }: { game: Game }) {
           </div>
           <span
             className={
-              "btn " + (game.color === "magenta" ? "magenta" : game.color === "yellow" ? "yellow" : "")
+              "btn " +
+              (game.color === "magenta" ? "magenta" : game.color === "yellow" ? "yellow" : "")
             }
           >
             JUGAR
@@ -52,18 +53,18 @@ function GameCard({ game }: { game: Game }) {
         </div>
       </div>
     </Link>
-  );
+  )
 }
 
 export function Library() {
-  const [q, setQ] = useState("");
-  const [cat, setCat] = useState<(typeof CATS)[number]>("TODOS");
+  const [q, setQ] = useState("")
+  const [cat, setCat] = useState<(typeof CATS)[number]>("TODOS")
 
   const filtered = useMemo(() => {
     return GAMES.filter(
-      (g) => (cat === "TODOS" || g.cat === cat) && g.title.toLowerCase().includes(q.toLowerCase())
-    );
-  }, [q, cat]);
+      (g) => (cat === "TODOS" || g.cat === cat) && g.title.toLowerCase().includes(q.toLowerCase()),
+    )
+  }, [q, cat])
 
   return (
     <div className="fade-in">
@@ -77,11 +78,19 @@ export function Library() {
       <div className="av-filters">
         <div className="av-search">
           <span className="ico">⌕</span>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar un juego por nombre…" />
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Buscar un juego por nombre…"
+          />
         </div>
         <div className="av-chips">
           {CATS.map((c) => (
-            <button key={c} className={"chip" + (cat === c ? " active" : "")} onClick={() => setCat(c)}>
+            <button
+              key={c}
+              className={"chip" + (cat === c ? " active" : "")}
+              onClick={() => setCat(c)}
+            >
               {c}
             </button>
           ))}
@@ -93,8 +102,18 @@ export function Library() {
           <GameCard key={g.id} game={g} />
         ))}
         {filtered.length === 0 && (
-          <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: 80, color: "var(--ink-faint)" }}>
-            <div className="pixel" style={{ fontSize: 14, color: "var(--magenta)", marginBottom: 12 }}>
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              textAlign: "center",
+              padding: 80,
+              color: "var(--ink-faint)",
+            }}
+          >
+            <div
+              className="pixel"
+              style={{ fontSize: 14, color: "var(--magenta)", marginBottom: 12 }}
+            >
               NO HAY RESULTADOS
             </div>
             <div>Intenta otra búsqueda o categoría.</div>
@@ -102,5 +121,5 @@ export function Library() {
         )}
       </div>
     </div>
-  );
+  )
 }

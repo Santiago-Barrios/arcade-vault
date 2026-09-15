@@ -1,30 +1,27 @@
-import type { Metadata } from "next";
-import { Press_Start_2P, JetBrains_Mono } from "next/font/google";
-import { Nav } from "@/components/nav";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Press_Start_2P, JetBrains_Mono } from "next/font/google"
+import { Nav } from "@/components/nav"
+import "./globals.css"
 
 const pixelFont = Press_Start_2P({
   variable: "--font-pixel",
   weight: "400",
   subsets: ["latin"],
-});
+})
 
 const monoFont = JetBrains_Mono({
   variable: "--font-mono-av",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "Arcade Vault",
   description: "Online arcade platform where users play games and compete on points.",
-};
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${pixelFont.variable} ${monoFont.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${pixelFont.variable} ${monoFont.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <div className="av-bg" />
         <div className="av-noise" />
@@ -47,5 +44,5 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </div>
       </body>
     </html>
-  );
+  )
 }

@@ -8,7 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Arcade Vault — an online arcade platform where users play games and compete on points. Currently a fresh, unmodified `create-next-app` scaffold (App Router, `app/page.tsx`, `app/layout.tsx`); no custom features implemented yet.
 
-
 No test runner is configured yet.
 
 ## Next.js version
@@ -27,4 +26,4 @@ Expect features to be defined as specs before implementation.
 
 ## Skills
 
-usa siempre /frontend-design para siseñar la  interfaz de usuario.
+usa siempre /frontend-design para siseñar la interfaz de usuario.
