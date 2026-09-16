@@ -1,6 +1,6 @@
 # 04 · Integración de Supabase
 
-**Estado:** Aprobado
+**Estado:** Implementado
 **Depende de:** —
 **Fecha:** 2026-09-15
 
@@ -27,8 +27,6 @@
 - Supabase Storage, Edge Functions o Realtime — no solicitados.
 - Cualquier cambio a `components/nav.tsx`, `/login`, `/salon` u otras pantallas existentes.
 
-
-
 ## Modelo de datos
 
 No se introduce ninguna tabla ni estructura de datos persistente — el proyecto de Supabase no tiene tablas (`public` vacío) y esta spec no las crea.
@@ -45,8 +43,6 @@ Contrato de la ruta de verificación:
 // Respuesta 200: { ok: true }
 // Respuesta 500: { ok: false, error: string }
 ```
-
-
 
 ## Plan de implementación
 
@@ -73,8 +69,6 @@ Cada paso deja la app funcional y navegable con `npm run dev`.
 - [ ] No se crea ninguna tabla, política RLS, ni lógica de autenticación/persistencia — el proyecto de Supabase sigue con el schema `public` vacío tras esta spec.
 - [ ] `npm run lint` pasa sin errores nuevos introducidos por este trabajo.
 
-
-
 ## Decisiones tomadas y discardas
 
 - **Sí:** dividir en specs — esta cubre solo la integración técnica (clientes + verificación); auth real y persistencia de puntuaciones/leaderboard quedan para specs futuras — decisión explícita del usuario.
@@ -87,11 +81,8 @@ Cada paso deja la app funcional y navegable con `npm run dev`.
 - **No:** username vs. email como identificador de login — mismo motivo, fuera de esta spec.
 - **No:** cualquier tabla o esquema de base de datos — no hay entidades que persistir todavía; se definen en specs futuras según necesidad real (puntuaciones, perfiles, etc.).
 
-
-
 ## Riesgos identificados
 
 - Next 16 puede tener breaking changes en el manejo de cookies (`cookies()` async) que afecten el patrón oficial de `@supabase/ssr` para Server Components; el paso 7 exige consultar `node_modules/next/dist/docs/` antes de dar el patrón por válido sin probarlo.
 - El `matcher` de `middleware.ts` mal configurado puede interceptar rutas estáticas o assets y degradar rendimiento; usar el patrón de exclusión recomendado por Supabase (excluir `_next/static`, `_next/image`, favicon, etc.).
 - Si `NEXT_PUBLIC_SUPABASE_ANON_KEY` se copia mal o expira, `/api/health/supabase` fallará; el criterio de aceptación de la respuesta `{ ok: false }` existe justamente para hacer ese fallo visible en vez de silencioso.
-
